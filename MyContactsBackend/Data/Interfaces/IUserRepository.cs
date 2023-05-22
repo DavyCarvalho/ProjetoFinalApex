@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Data.Models;
+using System.Collections.Generic;
 
 namespace Data.Interfaces
 {
     public interface IUserRepository
     {
-        void CreateUser();
-        List<string> GetUsers();
-        void UpdateUser();
-        void DeleteUser();
+        void CreateUser(User user);
+        List<User> GetUsers();
+        void UpdateUser(User user);
+        void DeleteUser(User user);
     }
 }
