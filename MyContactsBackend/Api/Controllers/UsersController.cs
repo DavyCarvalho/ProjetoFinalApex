@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Data.Models;
+using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using System.Collections.Generic;
 
@@ -16,27 +17,27 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public List<string> Get()
+        public List<User> Get()
         {
             return UserService.GetUsers();
         }
 
         [HttpPost]
-        public void Post()
+        public void Post([FromBody] User user)
         {
-            UserService.CreateUser("");
+            UserService.CreateUser(user);
         }
 
         [HttpPut]
-        public void Put()
+        public void Put([FromBody] User user)
         {
-            UserService.UpdateUser("");
+            UserService.UpdateUser(user);
         }
 
         [HttpDelete]
-        public void Delete()
+        public void Delete([FromBody] User user)
         {
-            UserService.DeleteUser("");
+            UserService.DeleteUser(user);
         }
     }
 }

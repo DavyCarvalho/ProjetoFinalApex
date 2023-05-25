@@ -18,11 +18,15 @@ namespace Data.Repositories
         public void CreateContact(Contact contact)
         {
             DbContext.Contacts.Add(contact);
+
+            DbContext.SaveChanges();
         }
 
         public void DeleteContact(Contact contact)
         {
             DbContext.Contacts.Remove(contact);
+
+            DbContext.SaveChanges();
         }
 
         public List<Contact> GetContacts()
@@ -33,6 +37,8 @@ namespace Data.Repositories
         public void UpdateContact(Contact contact)
         {
             DbContext.Contacts.Update(contact);
+
+            DbContext.SaveChanges();
         }
     }
 }

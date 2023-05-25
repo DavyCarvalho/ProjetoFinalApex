@@ -18,11 +18,15 @@ namespace Data.Repositories
         public void CreateUser(User user)
         {
             DbContext.Users.Add(user);
+
+            DbContext.SaveChanges();
         }
 
         public void DeleteUser(User user)
         {
             DbContext.Users.Remove(user);
+
+            DbContext.SaveChanges();
         }
 
         public List<User> GetUsers()
@@ -33,6 +37,8 @@ namespace Data.Repositories
         public void UpdateUser(User user)
         {
             DbContext.Users.Update(user);
+
+            DbContext.SaveChanges();
         }
     }
 }

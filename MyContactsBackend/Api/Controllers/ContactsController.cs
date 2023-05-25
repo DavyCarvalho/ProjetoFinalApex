@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Data.Models;
+using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using System.Collections.Generic;
 
@@ -16,27 +17,27 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public List<string> Get()
+        public List<Contact> Get()
         {
             return ContactService.GetContacts();
         }
 
         [HttpPost]
-        public void Post()
+        public void Post([FromBody] Contact contact)
         {
-            ContactService.CreateContact("");
+            ContactService.CreateContact(contact);
         }
 
         [HttpPut]
-        public void Put()
+        public void Put([FromBody] Contact contact)
         {
-            ContactService.UpdateContact("");
+            ContactService.UpdateContact(contact);
         }
 
         [HttpDelete]
-        public void Delete()
+        public void Delete([FromBody] Contact contact)
         {
-            ContactService.DeleteContact("");
+            ContactService.DeleteContact(contact);
         }
     }
 }

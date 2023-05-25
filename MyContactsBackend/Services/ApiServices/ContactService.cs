@@ -1,4 +1,5 @@
 ﻿using Data.Interfaces;
+using Data.Models;
 using Services.Interfaces;
 using System.Collections.Generic;
 
@@ -13,24 +14,24 @@ namespace Services.ApiServices
             ContactRepository = contactRepository;
         }
 
-        public void CreateContact(string nome)
+        public void CreateContact(Contact contact)
         {
-            ContactRepository.CreateContact();
+            ContactRepository.CreateContact(contact);
         }
 
-        public void DeleteContact(string nome)
+        public void DeleteContact(Contact contact)
         {
-            ContactRepository.DeleteContact();
+            ContactRepository.DeleteContact(contact);
         }
 
-        public List<string> GetContacts()
+        public List<Contact> GetContacts()
         {
             return ContactRepository.GetContacts();
         }
 
-        public void UpdateContact(string nome)
+        public void UpdateContact(Contact contact)
         {
-            ContactRepository.UpdateContact();
+            ContactRepository.UpdateContact(contact);
         }
     }
 }

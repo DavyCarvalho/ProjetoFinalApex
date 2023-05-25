@@ -1,4 +1,5 @@
 ﻿using Data.Interfaces;
+using Data.Models;
 using Services.Interfaces;
 using System.Collections.Generic;
 
@@ -13,24 +14,24 @@ namespace Services.ApiServices
             UserRepository = userRepository;
         }
 
-        public void CreateUser(string nome)
+        public void CreateUser(User user)
         {
-            UserRepository.CreateUser();
+            UserRepository.CreateUser(user);
         }
 
-        public void DeleteUser(string nome)
+        public void DeleteUser(User user)
         {
-            UserRepository.DeleteUser();
+            UserRepository.DeleteUser(user);
         }
 
-        public List<string> GetUsers()
+        public List<User> GetUsers()
         {
             return UserRepository.GetUsers();
         }
 
-        public void UpdateUser(string nome)
+        public void UpdateUser(User user)
         {
-            UserRepository.UpdateUser();
+            UserRepository.UpdateUser(user);
         }
     }
 }
