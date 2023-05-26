@@ -1,7 +1,7 @@
-﻿using Data.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
-using System.Collections.Generic;
+using System;
+using Utils.Dtos.User;
 
 namespace Api.Controllers
 {
@@ -9,35 +9,83 @@ namespace Api.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        public IUserService UserService;
+        private readonly IUserService _userService;
 
         public UsersController(IUserService userService)
         {
-            UserService = userService;
+            _userService = userService;
         }
 
         [HttpGet]
-        public List<User> Get()
+        public IActionResult Get()
         {
-            return UserService.GetUsers();
+            try
+            {
+                return Ok(_userService.GetUsers());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
-        public void Post([FromBody] User user)
+        public IActionResult Post([FromBody] UserCreateRequestDto userDto)
         {
-            UserService.CreateUser(user);
+            try
+            {
+                _userService.CreateUser(userDto);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
-        public void Put([FromBody] User user)
+        public IActionResult Put([FromBody] UserUpdateRequestDto userDto)
         {
-            UserService.UpdateUser(user);
+            try
+            {
+                var success = _userService.UpdateUser(userDto);
+
+                if (success == true)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("User not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpDelete]
-        public void Delete([FromBody] User user)
+        [HttpDelete("{id}")]
+        public IActionResult Delete([FromRoute] int id)
         {
-            UserService.DeleteUser(user);
+            try
+            {
+                var success = _userService.DeleteUser(id);
+
+                if (success == true)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("User not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

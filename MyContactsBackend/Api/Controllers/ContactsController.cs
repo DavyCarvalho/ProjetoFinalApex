@@ -1,7 +1,7 @@
-﻿using Data.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
-using System.Collections.Generic;
+using System;
+using Utils.Dtos.Contact;
 
 namespace Api.Controllers
 {
@@ -9,35 +9,90 @@ namespace Api.Controllers
     [Route("[controller]")]
     public class ContactsController : ControllerBase
     {
-        public IContactService ContactService;
+        private readonly IContactService _contactService;
 
         public ContactsController(IContactService contactService)
         {
-            ContactService = contactService;
+            _contactService = contactService;
         }
 
         [HttpGet]
-        public List<Contact> Get()
+        public IActionResult Get()
         {
-            return ContactService.GetContacts();
+            try
+            {
+                return Ok(_contactService.GetContacts());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
-        public void Post([FromBody] Contact contact)
+        public IActionResult Post([FromBody] ContactCreateRequestDto contactDto)
         {
-            ContactService.CreateContact(contact);
+            try
+            {
+                var success = _contactService.CreateContact(contactDto);
+
+                if (success == true)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("User Id not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
-        public void Put([FromBody] Contact contact)
+        public IActionResult Put([FromBody] ContactUpdateRequestDto contactDto)
         {
-            ContactService.UpdateContact(contact);
+            try
+            {
+                var success = _contactService.UpdateContact(contactDto);
+
+                if (success == true)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("Contact not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpDelete]
-        public void Delete([FromBody] Contact contact)
+        [HttpDelete("{id}")]
+        public IActionResult Delete([FromRoute] int id)
         {
-            ContactService.DeleteContact(contact);
+            try
+            {
+                var success = _contactService.DeleteContact(id);
+
+                if (success == true)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("Contact not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

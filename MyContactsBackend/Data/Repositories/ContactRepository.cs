@@ -34,6 +34,11 @@ namespace Data.Repositories
             return DbContext.Contacts.ToList();
         }
 
+        public Contact GetById(int id)
+        {
+            return DbContext.Contacts.FirstOrDefault(contact => contact.Id == id);
+        }
+
         public void UpdateContact(Contact contact)
         {
             DbContext.Contacts.Update(contact);

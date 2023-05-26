@@ -7,6 +7,7 @@ namespace Data.Interfaces
     {
         void CreateContact(Contact contact);
         List<Contact> GetContacts();
+        Contact GetById(int id);
         void UpdateContact(Contact contact);
         void DeleteContact(Contact contact);
     }

@@ -1,13 +1,13 @@
-﻿using Data.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Utils.Dtos.Contact;
 
 namespace Services.Interfaces
 {
     public interface IContactService
     {
-        void CreateContact(Contact contact);
-        List<Contact> GetContacts();
-        void UpdateContact(Contact contact);
-        void DeleteContact(Contact contact);
+        bool CreateContact(ContactCreateRequestDto contactCreateDto);
+        List<ContactResponseDto> GetContacts();
+        bool UpdateContact(ContactUpdateRequestDto contactUpdateDto);
+        bool DeleteContact(int id);
     }
 }
