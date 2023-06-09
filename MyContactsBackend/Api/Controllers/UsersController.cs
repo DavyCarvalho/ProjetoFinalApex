@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Utils.Api;
 using Utils.Dtos.User;
 
 namespace Api.Controllers
@@ -16,75 +20,96 @@ namespace Api.Controllers
             _userService = userService;
         }
 
+        [Authorize(Policy = "Administrator")]
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAllUsers()
         {
             try
             {
-                return Ok(_userService.GetUsers());
+                var result = await _userService.GetAllAsync();
+
+                return Ok(new ApiResponse<List<UserResponseDto>>(result));
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new ApiResponse(ex.Message));
             }
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] UserCreateRequestDto userDto)
+        public async Task<IActionResult> CreateNewUser([FromBody] UserCreateRequestDto userDto)
         {
             try
             {
-                _userService.CreateUser(userDto);
+                await _userService.CreateAsync(userDto);
 
-                return Ok();
+                return Ok(new ApiResponse());
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new ApiResponse(ex.Message));
             }
         }
 
+        [Authorize(Policy = "Administrator")]
         [HttpPut]
-        public IActionResult Put([FromBody] UserUpdateRequestDto userDto)
+        public async Task<IActionResult> UpdateUser([FromBody] UserUpdateRequestDto userDto)
         {
             try
             {
-                var success = _userService.UpdateUser(userDto);
+                var success = await _userService.UpdateAsync(userDto);
 
                 if (success == true)
                 {
-                    return Ok();
+                    return Ok(new ApiResponse());
                 }
                 else
                 {
-                    return BadRequest("User not found.");
+                    return BadRequest(new ApiResponse("User not found."));
                 }
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new ApiResponse(ex.Message));
             }
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        [Authorize(Policy = "Administrator")]
+        [HttpPut("update-to-admin/{id}")]
+        public async Task<IActionResult> UpdateToAdmin([FromRoute] int id)
         {
             try
             {
-                var success = _userService.DeleteUser(id);
+                await _userService.UpdateToAdmin(id);
+
+                return Ok(new ApiResponse());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse(ex.Message));
+            }
+        }
+
+        [Authorize(Policy = "Administrator")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser([FromRoute] int id)
+        {
+            try
+            {
+                var success = await _userService.DeleteAsync(id);
 
                 if (success == true)
                 {
-                    return Ok();
+                    return Ok(new ApiResponse());
                 }
                 else
                 {
-                    return BadRequest("User not found.");
+                    return BadRequest(new ApiResponse("User not found."));
                 }
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new ApiResponse(ex.Message));
             }
         }
     }

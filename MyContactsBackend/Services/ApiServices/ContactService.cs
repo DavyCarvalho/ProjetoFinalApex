@@ -3,6 +3,7 @@ using Data.Models;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Utils.Dtos.Contact;
 
 namespace Services.ApiServices
@@ -20,9 +21,9 @@ namespace Services.ApiServices
             _userRepository = userRepository;
         }
 
-        public bool CreateContact(ContactCreateRequestDto contactCreateDto)
+        public async Task<bool> CreateAsync(ContactCreateRequestDto contactCreateDto)
         {
-            var user = _userRepository.GetById(contactCreateDto.UserId);
+            var user = await _userRepository.GetByIdAsync(contactCreateDto.UserId);
 
             if (user != null)
             {
@@ -34,7 +35,9 @@ namespace Services.ApiServices
                     CreatedAt = DateTime.Now
                 };
 
-                _contactRepository.CreateContact(contact);
+                await _contactRepository.CreateAsync(contact);
+
+                await _contactRepository.SaveChangesAsync();
 
                 return true;
             }
@@ -42,13 +45,15 @@ namespace Services.ApiServices
             return false;
         }
 
-        public bool DeleteContact(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var contact = _contactRepository.GetById(id);
+            var contact = await _contactRepository.GetByIdAsync(id);
 
             if (contact != null)
             {
-                _contactRepository.DeleteContact(contact);
+                _contactRepository.Delete(contact);
+
+                await _contactRepository.SaveChangesAsync();
 
                 return true;
             }
@@ -56,9 +61,9 @@ namespace Services.ApiServices
             return false;
         }
 
-        public List<ContactResponseDto> GetContacts()
+        public async Task<List<ContactResponseDto>> GetAllAsync()
         {
-            var contacts = _contactRepository.GetContacts();
+            var contacts = await _contactRepository.GetAllAsync();
             var contactDtos = new List<ContactResponseDto>();
 
             foreach (var contactModel in contacts)
@@ -77,9 +82,9 @@ namespace Services.ApiServices
             return contactDtos;
         }
 
-        public bool UpdateContact(ContactUpdateRequestDto contactUpdateDto)
+        public async Task<bool> UpdateAsync(ContactUpdateRequestDto contactUpdateDto)
         {
-            var contactFound = _contactRepository.GetById(contactUpdateDto.Id);
+            var contactFound = await _contactRepository.GetByIdAsync(contactUpdateDto.Id);
 
             if (contactFound != null)
             {
@@ -88,7 +93,9 @@ namespace Services.ApiServices
 
                 contactFound.UpdatedAt = DateTime.Now;
 
-                _contactRepository.UpdateContact(contactFound);
+                _contactRepository.Update(contactFound);
+
+                await _contactRepository.SaveChangesAsync();
 
                 return true;
             }

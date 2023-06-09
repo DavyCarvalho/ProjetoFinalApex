@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Services.Interfaces;
+using System;
+using System.Threading.Tasks;
+using Utils.Api;
+using Utils.Dtos.Auth;
 
 namespace Api.Controllers
 {
@@ -6,28 +12,32 @@ namespace Api.Controllers
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
-        [HttpGet]
-        public string Get()
+        private readonly IAuthService _authService;
+
+        public AuthController(IAuthService authService)
         {
-            return "feito get";
+            _authService = authService;
         }
 
-        [HttpPost]
-        public string Post()
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
         {
-            return "feito post";
-        }
+            try
+            {
+                var token = await _authService.Login(loginRequestDto);
 
-        [HttpPut]
-        public string Put()
-        {
-            return "feito put";
-        }
+                if (token == string.Empty)
+                {
+                    return BadRequest(new ApiResponse("Dados de login inválidos! Verifique e tente novamente."));
+                }
 
-        [HttpDelete]
-        public string Delete()
-        {
-            return "feito delete";
+                return Ok(new ApiResponse<string>(token));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse(ex.Message));
+            }
         }
     }
 }
