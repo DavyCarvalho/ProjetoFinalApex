@@ -84,7 +84,7 @@ namespace Api.Controllers
 
         [Authorize(Policy = "Consumer")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser([FromRoute] int id)
+        public async Task<IActionResult> DeleteContact([FromRoute] int id)
         {
             try
             {
