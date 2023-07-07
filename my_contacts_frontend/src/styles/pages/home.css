@@ -1,0 +1,66 @@
+.container-contacts-list {
+
+    color: white;
+    background-color: #537a5a;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    overflow-y: auto;
+}
+
+.container-header-contacts {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1%;
+    margin-bottom: 2%;
+}
+
+.add-contact {
+    margin-left: 65%;
+}
+
+.container-table {
+    border-color: #282c34;
+    color: white;
+}
+
+.icon-collumn {
+    width: 1%;
+}
+
+.action-collumn {
+    width: 15%;
+}
+
+.name-values {
+    text-align: left;
+}
+
+.icon-values {
+    width: 2%;
+    color: white;
+}
+
+.action-values {
+    width: 10%;
+    padding-left: 30%;
+}
+
+.button-whatsapp {
+    margin-left: 10%;
+}
+
+.button-edit {
+    background-color: #537a5a;
+    color: white;
+    text-decoration: none;
+}
+
+.button-delete {
+    background-color: #537a5a;
+    color: white;
+    text-decoration: none;
+    padding-left: 0;
+}

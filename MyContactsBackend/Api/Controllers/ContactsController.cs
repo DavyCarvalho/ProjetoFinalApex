@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Utils.Api;
 using Utils.Dtos.Contact;
@@ -20,13 +23,15 @@ namespace Api.Controllers
             _contactService = contactService;
         }
 
-        [Authorize(Policy = "Administrator")]
+        [Authorize(Policy = "Consumer")]
         [HttpGet]
-        public async Task<IActionResult> GetAllContacts()
+        public async Task<IActionResult> GetAllUserContacts()
         {
             try
             {
-                var result = await _contactService.GetAllAsync();
+                var userId = GetUserIdFromRequestClaims();
+
+                var result = await _contactService.GetAllAsync(userId);
 
                 return Ok(new ApiResponse<List<ContactResponseDto>>(result));
             }
@@ -41,7 +46,9 @@ namespace Api.Controllers
         public async Task<IActionResult> CreateNewContact([FromBody] ContactCreateRequestDto contactDto)
         {
             try
-            {
+            { 
+                contactDto.UserId = GetUserIdFromRequestClaims();
+
                 var success = await _contactService.CreateAsync(contactDto);
 
                 if (success == true)
@@ -103,6 +110,22 @@ namespace Api.Controllers
             {
                 return BadRequest(new ApiResponse(ex.Message));
             }
+        }
+
+        private int GetUserIdFromRequestClaims()
+        {
+            string token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = tokenHandler.ReadJwtToken(token);
+            var nameIdClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "nameid");
+
+            if (nameIdClaim is null)
+            {
+                throw new Exception();
+            }
+
+            return int.Parse(nameIdClaim.Value);
         }
     }
 }

@@ -1,0 +1,38 @@
+.container-login {
+  color: black;
+  border: 1px solid black;
+  border-radius: 2rem;
+  background-color: #537a5a;
+  padding: 3rem;
+}
+
+.container-login-header {
+  display: flex;
+  align-items: center;
+}
+
+.container-login-button {
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.project-name {
+  position: relative;
+  left: 7%;
+}
+
+.icon-login {
+  position: relative;
+  right: 4%;
+  margin-bottom: 5%;
+  width: 20%;
+  height: 20%;
+  margin-left: 20%;
+}
+
+.divider-line {
+  text-align: center;
+  border-bottom: 1px solid black;
+}
