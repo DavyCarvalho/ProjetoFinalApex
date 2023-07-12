@@ -6,7 +6,7 @@ import ErrorMessage from './errorMessage';
 import '../styles/components/genericModal.css'
 
 export default function EditContactModal({ closeModal, id, contactName, contactPhone }) {
-  const [disable, setDisable] = useState(true);
+  const [confirmButtonDisabled, setConfirmButtonDisabled] = useState(true);
   const [name, setName] = useState(contactName);
   const [phone, setPhone] = useState(contactPhone);
   const [requestErrorMessage, setRequestErrorMessage] = useState();
@@ -23,10 +23,10 @@ export default function EditContactModal({ closeModal, id, contactName, contactP
 
   useEffect(() => {
     if (name.length > 0 && phone.length === 11) {
-      setDisable(false);
+      setConfirmButtonDisabled(false);
     }
     else {
-      setDisable(true);
+      setConfirmButtonDisabled(true);
     }
   }, [name, phone]);
 
@@ -59,7 +59,7 @@ export default function EditContactModal({ closeModal, id, contactName, contactP
             </button>
             <button
               type="submit"
-              disabled={ disable }
+              confirmButtonDisabledd={ confirmButtonDisabled }
               className="btn btn-success btn-save"
               onClick={ callApiToUpdateContact }
             >
