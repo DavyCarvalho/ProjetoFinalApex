@@ -6,7 +6,7 @@ import ErrorMessage from './errorMessage';
 import '../styles/components/genericModal.css'
 
 export default function UserRegisterModal({ closeModal }) {
-  const [disable, setDisable] = useState(true);
+  const [confirmButtonDisabled, setConfirmButtonDisabled] = useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,10 +27,10 @@ export default function UserRegisterModal({ closeModal }) {
     const testEmail = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
 
     if (testEmail.test(email) && strPassword.length > 3 && name.length > 0) {
-      setDisable(false);
+      setConfirmButtonDisabled(false);
     }
     else {
-      setDisable(true)
+      setConfirmButtonDisabled(true)
     }
   }, [name, email, password]);
 
@@ -71,7 +71,7 @@ export default function UserRegisterModal({ closeModal }) {
             </button>
             <button
               type="submit"
-              disabled={disable}
+              confirmButtonDisabledd={confirmButtonDisabled}
               className="btn btn-success btn-save"
               onClick={callApiToCreateUser}
             >
