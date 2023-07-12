@@ -17,15 +17,6 @@ export default function Login() {
 
   const redirectTo = useHistory();
 
-  const inputHandler = {
-    email: (value) => { setEmail(value); },
-    password: (value) => { setPassword(value); },
-  };
-
-  function genericHandler({ target: { value, name } }) {
-    inputHandler[name](value);
-  };
-
   async function loginHandler() {
     const { apiResponse } = await login({ email, password });
     
@@ -67,7 +58,7 @@ export default function Login() {
             placeholder="csharp@email.com"
             className="form-control"
             id="inputEmail"
-            onChange={(event) => { genericHandler(event); }}
+            onChange={ (event) => { setEmail(event.target.value); } }
           />
         </label>
       </div>
@@ -83,7 +74,7 @@ export default function Login() {
             placeholder="******"
             className="form-control"
             id="inputPassword"
-            onChange={(event) => { genericHandler(event); }}
+            onChange={(event) => { setPassword(event.target.value); }}
           />
         </label>
       </div>
