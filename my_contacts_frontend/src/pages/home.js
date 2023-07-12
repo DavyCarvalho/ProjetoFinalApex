@@ -22,13 +22,13 @@ export default function Home() {
   const [selectedContactName, setSelectedContactName] = useState();
   const [selectedContactPhone, setSelectedContactPhone] = useState();
 
-  const redirectTo = useHistory();
+  const pageRouter = useHistory();
 
   function redirectIfUserNotLogged() {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      redirectTo.push('/login');
+      pageRouter.push('/login');
     }
   }
 
@@ -36,7 +36,7 @@ export default function Home() {
 
   function logout() {
     localStorage.removeItem('token');
-    redirectTo.push('/login');
+    pageRouter.push('/login');
   };
 
   function setContactInputValuesToEditModal(id, name, phone) {
