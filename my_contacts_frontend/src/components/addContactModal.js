@@ -57,7 +57,7 @@ export default function AddContactModal({ closeModal }) {
             </button>
             <button
               type="submit"
-              confirmButtonDisabledd={ confirmButtonDisabled }
+              disabled={ confirmButtonDisabled }
               className="btn btn-success btn-save"
               onClick={ callApiToCreateContact }
             >
