@@ -71,7 +71,7 @@ export default function UserRegisterModal({ closeModal }) {
             </button>
             <button
               type="submit"
-              confirmButtonDisabledd={confirmButtonDisabled}
+              disabled={confirmButtonDisabled}
               className="btn btn-success btn-save"
               onClick={callApiToCreateUser}
             >
