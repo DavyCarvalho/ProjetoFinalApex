@@ -15,9 +15,9 @@ export default function Login() {
   const [registerModalIsVisible, setRegisterModalIsVisible] = useState(false);
   const [requestErrorMessage, setRequestErrorMessage] = useState();
 
-  const redirectTo = useHistory();
+  const pageRouter = useHistory();
 
-  async function loginHandler() {
+  async function callApiToAuthenticateUser() {
     const { apiResponse } = await login({ email, password });
     
     if (apiResponse.errorMessage != null) {
@@ -25,7 +25,7 @@ export default function Login() {
     } else {
       localStorage.setItem('token', apiResponse.data.toString());
       
-      redirectTo.push('/home');
+      pageRouter.push('/home');
     }
   };
 
@@ -83,7 +83,7 @@ export default function Login() {
           type="submit"
           className="btn btn-dark button"
           disabled={disable}
-          onClick={ loginHandler }
+          onClick={ callApiToAuthenticateUser }
         >
           Entrar
         </button>
