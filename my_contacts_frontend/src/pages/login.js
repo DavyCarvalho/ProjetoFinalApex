@@ -11,7 +11,7 @@ import '../styles/pages/login.css';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmButtonDisabled, setConfirmButtonDisabled] = useState(true);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
   const [registerModalIsVisible, setRegisterModalIsVisible] = useState(false);
   const [requestErrorMessage, setRequestErrorMessage] = useState();
 
@@ -19,79 +19,62 @@ export default function Login() {
 
   async function callApiToAuthenticateUser() {
     const { apiResponse } = await login({ email, password });
-    
+
     if (apiResponse.errorMessage != null) {
       setRequestErrorMessage(apiResponse.errorMessage);
     } else {
       localStorage.setItem('token', apiResponse.data.toString());
-      
+
       pageRouter.push('/home');
     }
   };
 
   useEffect(() => {
-    const testEmail = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
+    const emailRegex = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
 
-    if (testEmail.test(email) && password.length >= 3) {
-      setConfirmButtonDisabled(false);
+    if (emailRegex.test(email) && password.length >= 3) {
+      setButtonDisabled(false);
     }
     else {
-      setConfirmButtonDisabled(true);
+      setButtonDisabled(true);
     }
   }, [email, password]);
 
   return (
     <div className="container-login">
-        <div className="container-login-header mb-3">
-          <h4 className="project-name">MyContacts</h4>
-          <RiContactsBookLine className="icon-login" />
-        </div>
-      <div className="mb-3">
-        <label
-          htmlFor="inputEmail"
-          className="form-label"
-        >
-          E-mail
-          <input
-            type="email"
-            name="email"
-            placeholder="csharp@email.com"
-            className="form-control"
-            id="inputEmail"
-            onChange={ (event) => { setEmail(event.target.value); } }
-          />
-        </label>
+      <div className="container-login-header">
+        <h4 className="project-name">MyContacts</h4>
+        <RiContactsBookLine className="icon-login" />
       </div>
-      <div className="mb-3">
-        <label
-          htmlFor="inputPassword"
-          className="form-label"
-        >
-          Senha
-          <input
-            type="password"
-            name="password"
-            placeholder="******"
-            className="form-control"
-            id="inputPassword"
-            onChange={(event) => { setPassword(event.target.value); }}
-          />
-        </label>
+      <div className="email-input">
+        E-mail:
+        <input
+          placeholder="csharp@email.com"
+          className="form-control"
+          onChange={(event) => { setEmail(event.target.value) }}
+        />
       </div>
-      <div className="container-login-button mb-3">
+      <div className="password-input">
+        Senha:
+        <input
+          type="password"
+          placeholder="***********"
+          className="form-control"
+          onChange={(event) => { setPassword(event.target.value) }}
+        />
+      </div>
+      <div className="container-login-buttons">
         <button
-          type="submit"
           className="btn btn-dark button"
-          disabled={confirmButtonDisabled}
-          onClick={ callApiToAuthenticateUser }
+          disabled={buttonDisabled}
+          onClick={callApiToAuthenticateUser}
         >
           Entrar
         </button>
-        <div className="divider-line"> </div>
+        <div className="divider-line"></div>
         <button
-          type="submit"
           className="btn btn-dark button"
-          onClick={ () => setRegisterModalIsVisible(true) }
+          onClick={() => setRegisterModalIsVisible(true)}
         >
           Criar conta
         </button>

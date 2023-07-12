@@ -9,13 +9,7 @@
 .container-login-header {
   display: flex;
   align-items: center;
-}
-
-.container-login-button {
-  height: 30%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  margin-bottom: 7%;
 }
 
 .project-name {
@@ -30,6 +24,21 @@
   width: 20%;
   height: 20%;
   margin-left: 20%;
+}
+
+.email-input {
+  margin-bottom: 7%;
+}
+
+.password-input {
+  margin-bottom: 7%;
+}
+
+.container-login-buttons {
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .divider-line {

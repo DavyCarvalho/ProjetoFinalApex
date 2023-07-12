@@ -6,7 +6,7 @@ import ErrorMessage from './errorMessage';
 import '../styles/components/genericModal.css'
 
 export default function EditContactModal({ closeModal, id, contactName, contactPhone }) {
-  const [confirmButtonDisabled, setConfirmButtonDisabled] = useState(true);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
   const [name, setName] = useState(contactName);
   const [phone, setPhone] = useState(contactPhone);
   const [requestErrorMessage, setRequestErrorMessage] = useState();
@@ -23,43 +23,37 @@ export default function EditContactModal({ closeModal, id, contactName, contactP
 
   useEffect(() => {
     if (name.length > 0 && phone.length === 11) {
-      setConfirmButtonDisabled(false);
+      setButtonDisabled(false);
     }
     else {
-      setConfirmButtonDisabled(true);
+      setButtonDisabled(true);
     }
   }, [name, phone]);
 
   return (
     <div className="modal">
-      <div className="container-modal">
-        <div className="content-modal">
+      <div className="modal-container">
+        <div className="modal-content">
           <h2>Editar Contato</h2>
           Name:
           <input
-            name="name"
-            type="text"
             defaultValue={ contactName }
             onChange={ (event) => { setName(event.target.value); } }
           />
           Telefone:
           <input
-            name="phone"
-            type="integer"
             defaultValue={ contactPhone }
             onChange={ (event) => { setPhone(event.target.value); } }
           />
           <div className="modal-buttons">
             <button
-              type="submit"
               className="btn btn-danger btn-cancel"
               onClick={ closeModal }
             >
               Cancelar
             </button>
             <button
-              type="submit"
-              disabled={ confirmButtonDisabled }
+              disabled={ buttonDisabled }
               className="btn btn-success btn-save"
               onClick={ callApiToUpdateContact }
             >

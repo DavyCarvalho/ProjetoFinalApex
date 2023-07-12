@@ -6,7 +6,7 @@ import ErrorMessage from './errorMessage';
 import '../styles/components/genericModal.css'
 
 export default function AddContactModal({ closeModal }) {
-  const [confirmButtonDisabled, setConfirmButtonDisabled] = useState(true);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [requestErrorMessage, setRequestErrorMessage] = useState();
@@ -23,49 +23,39 @@ export default function AddContactModal({ closeModal }) {
 
   useEffect(() => {
     if (name.length > 0 && phone.toString().length === 11) {
-      setConfirmButtonDisabled(false);
+      setButtonDisabled(false);
     }
     else {
-      setConfirmButtonDisabled(true);
+      setButtonDisabled(true);
     }
   }, [name, phone]);
 
   return (
     <div className="modal">
-      <div className="container-modal">
-        <div className="content-modal">
+      <div className="modal-container">
+        <div className="modal-content">
           <h2>Adicionar Contato</h2>
           Nome:
-          <input
-            name="name"
-            type="text"
-            onChange={ (event) => { setName(event.target.value) } }
-          />
+          <input onChange={(event) => { setName(event.target.value) }} />
           Telefone:
-          <input
-            name="phone"
-            type="integer"
-            onChange={ (event) => { setPhone(event.target.value) } }
-          />
+          <input onChange={(event) => { setPhone(event.target.value) }} />
           <div className="modal-buttons">
             <button
-              type="submit"
               className="btn btn-danger btn-cancel"
-              onClick={ closeModal }
+              onClick={closeModal}
             >
               Cancelar
             </button>
             <button
-              type="submit"
-              disabled={ confirmButtonDisabled }
+              disabled={buttonDisabled}
               className="btn btn-success btn-save"
-              onClick={ callApiToCreateContact }
+              onClick={callApiToCreateContact}
             >
               Salvar
             </button>
           </div>
           <ErrorMessage
-            requestErrorMessage={ requestErrorMessage }
+            requestErrorMessage={requestErrorMessage}
           />
         </div>
       </div>

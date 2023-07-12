@@ -30,17 +30,29 @@
     width: 1%;
 }
 
+.name-collumn {
+    text-align: left;
+}
+
+.phone-collumn {
+    text-align: left;
+}
+
 .action-collumn {
     width: 15%;
+}
+
+.icon-values {
+    width: 2%;
+    color: white;
 }
 
 .name-values {
     text-align: left;
 }
 
-.icon-values {
-    width: 2%;
-    color: white;
+.phone-values {
+    text-align: left;
 }
 
 .action-values {

@@ -13,7 +13,7 @@ import ModalDelete from '../components/deleteContactModal';
 import '../styles/pages/home.css';
 
 export default function Home() {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editContactModalIsVisible, setEditContactModalIsVisible] = useState(false);
   const [deleteContactModalIsVisible, setDeleteContactModalIsVisible] = useState(false);
@@ -81,7 +81,6 @@ export default function Home() {
         <h2>MyContacts</h2>
         <button
           className="btn btn-secondary add-contact"
-          type="button"
           onClick={() => setAddContactModalIsVisible(true)}
         >
           Adicionar Contato
@@ -90,7 +89,6 @@ export default function Home() {
           ? < AddContactModal closeModal={() => setAddContactModalIsVisible(false)} />
           : null}
         <button
-          type="submit"
           onClick={logout}
           className="btn btn-dark"
         >
@@ -100,64 +98,64 @@ export default function Home() {
       <table className="table container-table">
         <thead>
           <tr>
-            <td className="col icon-collumn"> </td>
-            <td className="col name-values">Nome</td>
-            <td className="col">Telefone</td>
-            <td className="col action-collumn">Ações</td>
+            <td className="icon-collumn"></td>
+            <td className="name-collumn">Nome</td>
+            <td className="phone-collumn">Telefone</td>
+            <td className="action-collumn">Ações</td>
           </tr>
         </thead>
-        {loading ? <span>Carregando contatos...</span>
-          : contacts.map(
-            ({ id, name, phone }) => (
-              <tbody key={id} className="container text-center">
-                <tr>
-                  <td className="icon-values"><IoMdContact /></td>
-                  <td className="name-values">{name}</td>
-                  <td>{phone}</td>
-                  <td className="action-values">
-                    <a
-                      className="icon-values button-whatsapp"
-                      href={`https://api.whatsapp.com/send?phone=${phone}&text=Olá,%20`}
-                    >
-                      <AiOutlineWhatsApp />
-                    </a>
-                    <button
-                      className="btn btn-link button-edit"
-                      type="button"
-                      onClick={() => {
-                        setContactInputValuesToEditModal(id, name, phone);
-                        setEditContactModalIsVisible(true);
-                      }}
-                    >
-                      <BiEditAlt />
-                    </button>
-                    {editContactModalIsVisible
-                      ? <EditContactModal
-                        closeModal={() => setEditContactModalIsVisible(false)}
-                        id={selectedContactId}
-                        contactName={selectedContactName}
-                        contactPhone={selectedContactPhone}
-                      />
-                      : null}
-                    <button
-                      type="button"
-                      className="btn btn-link button-delete"
-                      onClick={() => showModalDelete(id, name)}
-                    >
-                      <RiDeleteBin5Line />
-                    </button>
-                    {deleteContactModalIsVisible
-                      ? <ModalDelete
-                        closeModal={() => setDeleteContactModalIsVisible(false)}
-                        id={selectedContactId}
-                        contactName={selectedContactName}
-                      />
-                      : null}
-                  </td>
-                </tr>
-              </tbody>
-            ),
-          )}
+        {
+          contacts == null
+            ? <></>
+            : contacts.map(
+              ({ id, name, phone }) => (
+                <tbody key={id} className="container text-center">
+                  <tr>
+                    <td className="icon-values"><IoMdContact /></td>
+                    <td className="name-values">{name}</td>
+                    <td className="phone-values">{phone}</td>
+                    <td className="action-values">
+                      <a
+                        className="icon-values button-whatsapp"
+                        href={`https://api.whatsapp.com/send?phone=${phone}&text=Olá ${name} tudo bem?`}
+                      >
+                        <AiOutlineWhatsApp />
+                      </a>
+                      <button
+                        className="btn btn-link button-edit"
+                        onClick={() => {
+                          setContactInputValuesToEditModal(id, name, phone);
+                          setEditContactModalIsVisible(true);
+                        }}
+                      >
+                        <BiEditAlt />
+                      </button>
+                      {editContactModalIsVisible
+                        ? <EditContactModal
+                          closeModal={() => setEditContactModalIsVisible(false)}
+                          id={selectedContactId}
+                          contactName={selectedContactName}
+                          contactPhone={selectedContactPhone}
+                        />
+                        : null}
+                      <button
+                        className="btn btn-link button-delete"
+                        onClick={() => showModalDelete(id, name)}
+                      >
+                        <RiDeleteBin5Line />
+                      </button>
+                      {deleteContactModalIsVisible
+                        ? <ModalDelete
+                          closeModal={() => setDeleteContactModalIsVisible(false)}
+                          id={selectedContactId}
+                          contactName={selectedContactName}
+                        />
+                        : null}
+                    </td>
+                  </tr>
+                </tbody>
+              ),
+            )}
       </table>
     </div>
   );
