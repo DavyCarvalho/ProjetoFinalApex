@@ -11,7 +11,7 @@ import '../styles/pages/login.css';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmButtonDisable, setConfirmButtonDisable] = useState(true);
+  const [confirmButtonDisabled, setConfirmButtonDisabled] = useState(true);
   const [registerModalIsVisible, setRegisterModalIsVisible] = useState(false);
   const [requestErrorMessage, setRequestErrorMessage] = useState();
 
@@ -33,10 +33,10 @@ export default function Login() {
     const testEmail = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
 
     if (testEmail.test(email) && password.length >= 3) {
-      setConfirmButtonDisable(false);
+      setConfirmButtonDisabled(false);
     }
     else {
-      setConfirmButtonDisable(true);
+      setConfirmButtonDisabled(true);
     }
   }, [email, password]);
 
@@ -82,7 +82,7 @@ export default function Login() {
         <button
           type="submit"
           className="btn btn-dark button"
-          confirmButtonDisabled={confirmButtonDisable}
+          confirmButtonDisabledd={confirmButtonDisabled}
           onClick={ callApiToAuthenticateUser }
         >
           Entrar
