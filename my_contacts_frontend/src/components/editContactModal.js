@@ -59,7 +59,7 @@ export default function EditContactModal({ closeModal, id, contactName, contactP
             </button>
             <button
               type="submit"
-              confirmButtonDisabledd={ confirmButtonDisabled }
+              disabled={ confirmButtonDisabled }
               className="btn btn-success btn-save"
               onClick={ callApiToUpdateContact }
             >
