@@ -82,7 +82,7 @@ export default function Login() {
         <button
           type="submit"
           className="btn btn-dark button"
-          confirmButtonDisabledd={confirmButtonDisabled}
+          disabled={confirmButtonDisabled}
           onClick={ callApiToAuthenticateUser }
         >
           Entrar
