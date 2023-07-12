@@ -6,7 +6,7 @@ import ErrorMessage from './errorMessage';
 import '../styles/components/genericModal.css'
 
 export default function AddContactModal({ closeModal }) {
-  const [confirmButtonDisable, setConfirmButtonDisable] = useState(true);
+  const [confirmButtonDisabled, setConfirmButtonDisabled] = useState(true);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [requestErrorMessage, setRequestErrorMessage] = useState();
@@ -23,10 +23,10 @@ export default function AddContactModal({ closeModal }) {
 
   useEffect(() => {
     if (name.length > 0 && phone.toString().length === 11) {
-      setConfirmButtonDisable(false);
+      setConfirmButtonDisabled(false);
     }
     else {
-      setConfirmButtonDisable(true);
+      setConfirmButtonDisabled(true);
     }
   }, [name, phone]);
 
@@ -57,7 +57,7 @@ export default function AddContactModal({ closeModal }) {
             </button>
             <button
               type="submit"
-              confirmButtonDisabled={ confirmButtonDisable }
+              confirmButtonDisabledd={ confirmButtonDisabled }
               className="btn btn-success btn-save"
               onClick={ callApiToCreateContact }
             >
