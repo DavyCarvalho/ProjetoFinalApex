@@ -134,3 +134,4 @@ $RECYCLE.BIN/
 
 _NCrunch*
 /MyContactsBackend/Api/appsettings.Development.json
+/my_contacts_frontend/node_modules

@@ -1,0 +1,47 @@
+.container-login {
+    color: black;
+    border: 1px solid black;
+    border-radius: 2rem;
+    background-color: #537a5a;
+    padding: 3rem;
+}
+
+.container-login-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 7%;
+}
+
+.project-name {
+    position: relative;
+    left: 7%;
+}
+
+.icon-login {
+    position: relative;
+    right: 4%;
+    margin-bottom: 5%;
+    width: 20%;
+    height: 20%;
+    margin-left: 20%;
+}
+
+.email-input {
+    margin-bottom: 7%;
+}
+
+.password-input {
+    margin-bottom: 7%;
+}
+
+.container-login-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 30%;
+}
+
+.divider-line {
+    text-align: center;
+    border-bottom: 1px solid black;
+}
