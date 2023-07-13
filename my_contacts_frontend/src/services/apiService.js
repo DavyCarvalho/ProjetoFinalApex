@@ -29,7 +29,7 @@ api.interceptors.response.use(
 );
 
 function buildApiResponseWithStatusCode({ data, status = null }) {
-  if (data === null || status === 500 || status === 400) {
+  if (data === null && status !== 200 && status !== 201) {
     let apiResponse = {
       errorMessage: data.errorMessage ?? "Serviço indisponível!", // Define a mensagem de erro da resposta
     };
