@@ -1,7 +1,7 @@
 // userRegisterModal.js: Componente de modal para o registro de usuários
 
-import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { createUser } from '../services/apiService'; // Importa função para criar um usuário na API
 import ErrorMessage from './errorMessage'; // Importa componente para exibir mensagens de erro
 
@@ -9,10 +9,10 @@ import '../styles/components/genericModal.css'; // Importa os estilos CSS espec�
 
 export default function UserRegisterModal({ closeModal }) {
   // Define os estados para armazenar os valores do formulário e a mensagem de erro da requisição
-  const [buttonDisabled, setButtonDisabled] = useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [buttonDisabled, setButtonDisabled] = useState(true);
   const [requestErrorMessage, setRequestErrorMessage] = useState();
 
   // Função assíncrona para chamar a API e criar um usuário
@@ -46,19 +46,12 @@ export default function UserRegisterModal({ closeModal }) {
           <h2>Cadastre-se</h2> {/* Título do modal */}
           <p>É rápido e fácil.</p> {/* Descrição do modal */}
           Nome: {/* Label para o campo de nome */}
-          <input
-            defaultValue={name} // Valor inicial do campo de nome
-            onChange={(event) => { setName(event.target.value); }} // Função para atualizar o estado do nome
-          />
+          <input onChange={(event) => { setName(event.target.value); }} /> {/* Função para atualizar o estado do nome */}
           E-mail: {/* Label para o campo de e-mail */}
-          <input
-            defaultValue={email} // Valor inicial do campo de e-mail
-            onChange={(event) => { setEmail(event.target.value); }} // Função para atualizar o estado do e-mail
-          />
+          <input onChange={(event) => { setEmail(event.target.value); }} /> {/* // Função para atualizar o estado do e-mail */}
           Senha: {/* Label para o campo de senha */}
           <input
             type="password"
-            defaultValue={password} // Valor inicial do campo de senha
             onChange={(event) => { setPassword(event.target.value); }} // Função para atualizar o estado da senha
           />
           <div className="modal-buttons"> {/* Container dos botões */}
@@ -76,9 +69,7 @@ export default function UserRegisterModal({ closeModal }) {
               Salvar
             </button>
           </div>
-          <ErrorMessage
-            requestErrorMessage={requestErrorMessage} // Passa a mensagem de erro para o componente ErrorMessage
-          />
+          <ErrorMessage requestErrorMessage={requestErrorMessage} /> {/* Passa a mensagem de erro para o componente ErrorMessage */}
         </div>
       </div>
     </div>

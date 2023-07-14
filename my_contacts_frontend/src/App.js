@@ -1,4 +1,3 @@
-import React from 'react';
 import './styles/App.css';
 import Router from './router';
 
@@ -8,7 +7,7 @@ import Router from './router';
  */
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <Router />{/* Componente Router para gerenciamento das rotas */}
     </div>
   );

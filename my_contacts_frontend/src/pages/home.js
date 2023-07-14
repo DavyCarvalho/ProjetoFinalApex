@@ -1,6 +1,6 @@
 // home.js: Página inicial do aplicativo
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { IoMdContact } from 'react-icons/io';
 import { AiOutlineWhatsApp } from 'react-icons/ai';
@@ -16,9 +16,9 @@ import '../styles/pages/home.css'; // Importa os estilos CSS específicos para a
 
 export default function Home() {
   const [contacts, setContacts] = useState(null); // Define o estado para armazenar os contatos do usuário
+  const [addContactModalIsVisible, setAddContactModalIsVisible] = useState(false); // Define o estado para controlar a visibilidade do modal de adição
   const [editContactModalIsVisible, setEditContactModalIsVisible] = useState(false); // Define o estado para controlar a visibilidade do modal de edição
   const [deleteContactModalIsVisible, setDeleteContactModalIsVisible] = useState(false); // Define o estado para controlar a visibilidade do modal de exclusão
-  const [addContactModalIsVisible, setAddContactModalIsVisible] = useState(false); // Define o estado para controlar a visibilidade do modal de adição
   const [selectedContactId, setSelectedContactId] = useState(); // Define o estado para armazenar o ID do contato selecionado
   const [selectedContactName, setSelectedContactName] = useState(); // Define o estado para armazenar o nome do contato selecionado
   const [selectedContactPhone, setSelectedContactPhone] = useState(); // Define o estado para armazenar o telefone do contato selecionado
@@ -68,9 +68,7 @@ export default function Home() {
     }
   }
 
-  useEffect(() => {
-    fetchData(); // Chama a função fetchData() ao renderizar o componente
-  });
+  fetchData(); // Chama a função fetchData() ao renderizar o componente
 
   return (
     <div className="container-contacts-list"> {/* Container principal da página */}
@@ -82,12 +80,14 @@ export default function Home() {
         >
           Adicionar Contato
         </button>
-        {addContactModalIsVisible ? ( // Verifica se o modal de adição de contato está visível
-          <AddContactModal closeModal={() => setAddContactModalIsVisible(false)} /> // Componente de modal de adição de contato
-        ) : null}
+        {
+          addContactModalIsVisible // Verifica se o modal de adição de contato está visível
+            ? <AddContactModal closeModal={() => setAddContactModalIsVisible(false)} /> // Componente de modal de adição de contato
+            : null
+        }
         <button
-          onClick={logout} // Função para realizar logout
           className="btn btn-dark" // Estilo CSS para o botão de logout
+          onClick={logout} // Função para realizar logout
         >
           Sair
         </button>
@@ -101,55 +101,61 @@ export default function Home() {
             <td className="action-collumn">Ações</td>
           </tr>
         </thead>
-        {contacts == null ? null : ( // Verifica se há contatos para exibir na tabela
-          <tbody>
-            {contacts.map(({ id, name, phone }) => ( // Mapeia os contatos e renderiza cada um na tabela
-              <tr key={id}>
-                <td className="icon-values"><IoMdContact /></td> {/* Ícone de contato */}
-                <td className="name-values">{name}</td> {/* Nome do contato */}
-                <td className="phone-values">{phone}</td> {/* Telefone do contato */}
-                <td className="action-values"> {/* Coluna de ações */}
-                  <a
-                    className="icon-values button-whatsapp" // Estilo CSS para o ícone de WhatsApp
-                    href={`https://api.whatsapp.com/send?phone=${phone}&text=Olá ${name} tudo bem?`} // Link do WhatsApp com a mensagem pré-preenchida
-                  >
-                    <AiOutlineWhatsApp /> {/* Ícone do WhatsApp */}
-                  </a>
-                  <button
-                    className="btn btn-link button-edit" // Estilo CSS para o botão de edição
-                    onClick={() => {
-                      setContactInputValuesToEditModal(id, name, phone); // Define os valores de entrada para o modal de edição
-                      setEditContactModalIsVisible(true); // Exibe o modal de edição de contato
-                    }}
-                  >
-                    <BiEditAlt /> {/* Ícone de edição */}
-                  </button>
-                  {editContactModalIsVisible ? ( // Verifica se o modal de edição de contato está visível
-                    <EditContactModal // Componente de modal de edição de contato
-                      closeModal={() => setEditContactModalIsVisible(false)}
-                      id={selectedContactId}
-                      contactName={selectedContactName}
-                      contactPhone={selectedContactPhone}
-                    />
-                  ) : null}
-                  <button
-                    className="btn btn-link button-delete" // Estilo CSS para o botão de exclusão
-                    onClick={() => showModalDelete(id, name)} // Função para exibir o modal de exclusão de contato
-                  >
-                    <RiDeleteBin5Line /> {/* Ícone de exclusão */}
-                  </button>
-                  {deleteContactModalIsVisible ? ( // Verifica se o modal de exclusão de contato está visível
-                    <ModalDelete // Componente de modal de exclusão de contato
-                      closeModal={() => setDeleteContactModalIsVisible(false)}
-                      id={selectedContactId}
-                      contactName={selectedContactName}
-                    />
-                  ) : null}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        )}
+        {
+          contacts == null // Verifica se há contatos para exibir na tabela
+            ? null
+            : <tbody>
+              {contacts.map(({ id, name, phone }) => ( // Mapeia os contatos e renderiza cada um na tabela
+                <tr key={id}>
+                  <td className="icon-values"><IoMdContact /></td> {/* Ícone de contato */}
+                  <td className="name-values">{name}</td> {/* Nome do contato */}
+                  <td className="phone-values">{phone}</td> {/* Telefone do contato */}
+                  <td className="action-values"> {/* Coluna de ações */}
+                    <a
+                      className="icon-values button-whatsapp" // Estilo CSS para o ícone de WhatsApp
+                      href={`https://api.whatsapp.com/send?phone=${phone}&text=Olá ${name} tudo bem?`} // Link do WhatsApp com a mensagem pré-preenchida
+                    >
+                      <AiOutlineWhatsApp /> {/* Ícone do WhatsApp */}
+                    </a>
+                    <button
+                      className="btn btn-link button-edit" // Estilo CSS para o botão de edição
+                      onClick={() => {
+                        setContactInputValuesToEditModal(id, name, phone); // Define os valores de entrada para o modal de edição
+                        setEditContactModalIsVisible(true); // Exibe o modal de edição de contato
+                      }}
+                    >
+                      <BiEditAlt /> {/* Ícone de edição */}
+                    </button>
+                    {
+                      editContactModalIsVisible // Verifica se o modal de edição de contato está visível
+                        ? <EditContactModal // Componente de modal de edição de contato
+                          closeModal={() => setEditContactModalIsVisible(false)}
+                          id={selectedContactId}
+                          contactName={selectedContactName}
+                          contactPhone={selectedContactPhone}
+                        />
+                        : null
+                    }
+                    <button
+                      className="btn btn-link button-delete" // Estilo CSS para o botão de exclusão
+                      onClick={() => showModalDelete(id, name)} // Função para exibir o modal de exclusão de contato
+                    >
+                      <RiDeleteBin5Line /> {/* Ícone de exclusão */}
+                    </button>
+                    {
+                      deleteContactModalIsVisible // Verifica se o modal de exclusão de contato está visível
+                        ? <ModalDelete // Componente de modal de exclusão de contato
+                          closeModal={() => setDeleteContactModalIsVisible(false)}
+                          id={selectedContactId}
+                          contactName={selectedContactName}
+                        />
+                        : null
+                    }
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+        }
       </table>
     </div>
   );

@@ -77,9 +77,11 @@ export default function Login() {
         >
           Criar conta
         </button>
-        {registerModalIsVisible ? ( // Verifica se o modal de registro está visível
-          <UserRegisterModal closeModal={() => setRegisterModalIsVisible(false)} /> // Componente de modal de registro
-        ) : null}
+        {
+          registerModalIsVisible // Verifica se o modal de registro está visível 
+            ? <UserRegisterModal closeModal={() => setRegisterModalIsVisible(false)} /> // Componente de modal de registro
+            : null
+        }
       </div>
       <ErrorMessage requestErrorMessage={requestErrorMessage} /> {/* Exibe a mensagem de erro da requisição, se houver */}
     </div>

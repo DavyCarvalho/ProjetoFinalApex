@@ -1,8 +1,8 @@
 // deleteContactModal.js: Componente de modal para deletar um contato
 
 // Importa as dependências necessárias
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { deleteContact } from '../services/apiService'; // Importa função para deletar um contato na API
 import ErrorMessage from './errorMessage'; // Importa componente para exibir mensagens de erro
 
@@ -26,34 +26,30 @@ export default function ModalDelete({ closeModal, id, contactName }) {
   }
 
   return (
-    <div className="modal"> {/* Container principal do modal */}
-      <div className="modal-container"> {/* Container do conteúdo do modal */}
-        <div className="modal-content"> {/* Conteúdo do modal */}
+    <div className='modal'> {/* Container principal do modal */}
+      <div className='modal-container'> {/* Container do conteúdo do modal */}
+        <div className='modal-content'> {/* Conteúdo do modal */}
           <h2>Deletar contato</h2> {/* Título do modal */}
-          <p>
+          <p> {/* Mensagem de confirmação de exclusão */}
             Tem certeza que deseja excluir
-            {' "'}
-            {contactName}
-            {'" '}
+            '{contactName}'
             da sua lista de contatos?
           </p> {/* Mensagem de confirmação de exclusão */}
-          <div className="modal-buttons"> {/* Container dos botões */}
+          <div className='modal-buttons'> {/* Container dos botões */}
             <button
-              className="btn btn-danger btn-cancel" // Estilo CSS para o botão de cancelar
+              className='btn btn-danger btn-cancel' // Estilo CSS para o botão de cancelar
               onClick={closeModal} // Função para fechar o modal
             >
               Cancelar
             </button>
             <button
-              className="btn btn-success btn-save" // Estilo CSS para o botão de excluir
+              className='btn btn-success btn-save' // Estilo CSS para o botão de excluir
               onClick={callApiToDeleteContact} // Função para excluir o contato
             >
               Excluir
             </button>
           </div>
-          <ErrorMessage
-            requestErrorMessage={requestErrorMessage} // Passa a mensagem de erro para o componente ErrorMessage
-          />
+          <ErrorMessage requestErrorMessage={requestErrorMessage} /> {/* Passa a mensagem de erro para o componente ErrorMessage */}
         </div>
       </div>
     </div>

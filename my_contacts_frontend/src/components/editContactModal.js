@@ -1,7 +1,7 @@
 // editContactModal.js: Componente de modal para editar um contato
 
-import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { updateContact } from '../services/apiService'; // Importa função para atualizar um contato na API
 import ErrorMessage from './errorMessage'; // Importa componente para exibir mensagens de erro
 
@@ -36,9 +36,9 @@ export default function EditContactModal({ closeModal, id, contactName, contactP
   }, [name, phone]);
 
   return (
-    <div className="modal"> {/* Container principal do modal */}
-      <div className="modal-container"> {/* Container do conteúdo do modal */}
-        <div className="modal-content"> {/* Conteúdo do modal */}
+    <div className='modal'> {/* Container principal do modal */}
+      <div className='modal-container'> {/* Container do conteúdo do modal */}
+        <div className='modal-content'> {/* Conteúdo do modal */}
           <h2>Editar Contato</h2> {/* Título do modal */}
           Name: {/* Label para o campo de nome */}
           <input
@@ -50,24 +50,22 @@ export default function EditContactModal({ closeModal, id, contactName, contactP
             defaultValue={contactPhone} // Valor inicial do campo de telefone
             onChange={(event) => { setPhone(event.target.value); }} // Função para atualizar o estado do telefone
           />
-          <div className="modal-buttons"> {/* Container dos botões */}
+          <div className='modal-buttons'> {/* Container dos botões */}
             <button
-              className="btn btn-danger btn-cancel" // Estilo CSS para o botão de cancelar
+              className='btn btn-danger btn-cancel' // Estilo CSS para o botão de cancelar
               onClick={closeModal} // Função para fechar o modal
             >
               Cancelar
             </button>
             <button
               disabled={buttonDisabled} // Define o estado do botão de salvar como habilitado ou desabilitado
-              className="btn btn-success btn-save" // Estilo CSS para o botão de salvar
+              className='btn btn-success btn-save' // Estilo CSS para o botão de salvar
               onClick={callApiToUpdateContact} // Função para atualizar o contato
             >
               Salvar
             </button>
           </div>
-          <ErrorMessage
-            requestErrorMessage={requestErrorMessage} // Passa a mensagem de erro para o componente ErrorMessage
-          />
+          <ErrorMessage requestErrorMessage={requestErrorMessage} /> {/* Passa a mensagem de erro para o componente ErrorMessage */}
         </div>
       </div>
     </div>
