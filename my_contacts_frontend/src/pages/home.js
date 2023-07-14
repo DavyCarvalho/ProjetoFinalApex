@@ -101,14 +101,14 @@ export default function Home() {
                 </thead>
                 {
                     contacts == null
-                        ? <></>
-                        : contacts.map(({ id, name, phone }) => (
-                            <tbody key={id} className='container text-center'>
-                                <tr>
-                                    <td className='icon-values'><IoMdContact /></td>
-                                    <td className='name-values'>{name}</td>
-                                    <td className='phone-values'>{phone}</td>
-                                    <td className='action-values'>
+                        ? null
+                        : <tbody>
+                            {contacts.map(({ id, name, phone }) => (
+                                <tr key={id}>
+                                    <td className="icon-values"><IoMdContact /></td>
+                                    <td className="name-values">{name}</td>
+                                    <td className="phone-values">{phone}</td>
+                                    <td className="action-values">
                                         <a
                                             className="icon-values button-whatsapp"
                                             href={`https://api.whatsapp.com/send?phone=${phone}&text=Olá ${name} tudo bem?`}
@@ -151,8 +151,8 @@ export default function Home() {
                                         }
                                     </td>
                                 </tr>
-                            </tbody>
-                        ))
+                            ))}
+                        </tbody>
                 }
             </table>
         </div>
