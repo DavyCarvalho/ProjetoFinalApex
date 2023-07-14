@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 import { createUser } from '../services/apiService';
 import ErrorMessage from './errorMessage';
+
 import '../styles/components/genericModal.css'
 
 export default function UserRegisterModal({ closeModal }) {
