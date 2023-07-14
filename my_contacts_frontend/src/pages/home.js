@@ -102,7 +102,7 @@ export default function Home() {
                 {
                     contacts == null
                         ? null
-                        : <tbody>
+                        : <tbody> 
                             {contacts.map(({ id, name, phone }) => (
                                 <tr key={id}>
                                     <td className="icon-values"><IoMdContact /></td>
