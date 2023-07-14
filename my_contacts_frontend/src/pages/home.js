@@ -14,7 +14,6 @@ import '../styles/pages/home.css';
 
 export default function Home() {
   const [contacts, setContacts] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [editContactModalIsVisible, setEditContactModalIsVisible] = useState(false);
   const [deleteContactModalIsVisible, setDeleteContactModalIsVisible] = useState(false);
   const [addContactModalIsVisible, setAddContactModalIsVisible] = useState(false);
@@ -61,10 +60,6 @@ export default function Home() {
 
       if (apiResponse.statusCode === 200) {
         setContacts(apiResponse.data);
-        setLoading(false);
-      }
-      else {
-        setLoading(false);
       }
     } catch (e) {
       console.error(e);
