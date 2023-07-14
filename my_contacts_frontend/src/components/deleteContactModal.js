@@ -49,3 +49,9 @@ export default function ModalDelete({ closeModal, id, contactName }) {
         </div>
     );
 }
+
+ModalDelete.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+  contactName: PropTypes.string.isRequired,
+};
