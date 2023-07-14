@@ -46,6 +46,8 @@ namespace Api.Controllers
         {
             try
             {
+                contactDto.UserId = GetUserIdFromRequest();
+
                 var success = await _contactService.CreateAsync(contactDto);
 
                 if (success == true)

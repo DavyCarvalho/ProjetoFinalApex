@@ -1,55 +1,49 @@
-import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-
-import { createUser } from '../services/apiService';
+import PropTypes from 'prop-types';
+import { updateContact } from '../services/apiService';
 import ErrorMessage from './errorMessage';
+
 import '../styles/components/genericModal.css'
 
-export default function UserRegisterModal({ closeModal }) {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+export default function EditContactModal({ closeModal, id, contactName, contactPhone }) {
     const [buttonDisabled, setButtonDisabled] = useState(true);
+    const [name, setName] = useState(contactName);
+    const [phone, setPhone] = useState(contactPhone);
     const [requestErrorMessage, setRequestErrorMessage] = useState();
 
-    async function callApiToCreateUser() {
-        const { apiResponse } = await createUser({ name, email, password });
+    async function callApiToUpdateContact() {
+        const { apiResponse } = await updateContact({ id, name, phone });
 
         if (apiResponse.errorMessage != null) {
             setRequestErrorMessage(apiResponse.errorMessage);
         } else {
-            closeModal();
+            window.location.reload();
         }
     };
 
     useEffect(() => {
-        const strPassword = password.toString();
-        const emailRegex = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
-
-        if (emailRegex.test(email) && strPassword.length >= 3 && name.length > 0) {
+        if (name.length > 0 && phone.length === 11) {
             setButtonDisabled(false);
         }
         else {
-            setButtonDisabled(true)
+            setButtonDisabled(true);
         }
-    }, [name, email, password]);
+    }, [name, phone]);
 
     return (
         <div className='modal'>
             <div className='modal-container'>
                 <div className='modal-content'>
-                    <h2>Cadastre-se</h2>
-                    <p>É rápido e fácil.</p>
-                    Nome:
-                    <input onChange={(event) => { setName(event.target.value) }}
-                    />
-                    Email:
-                    <input onChange={(event) => { setEmail(event.target.value); }}
-                    />
-                    Senha:
+                    <h2>Editar Contato</h2>
+                    Name:
                     <input
-                        type='password'
-                        onChange={(event) => { setPassword(event.target.value); }}
+                        defaultValue={contactName}
+                        onChange={(event) => { setName(event.target.value); }}
+                    />
+                    Telefone:
+                    <input
+                        defaultValue={contactPhone}
+                        onChange={(event) => { setPhone(event.target.value); }}
                     />
                     <div className='modal-buttons'>
                         <button
@@ -61,7 +55,7 @@ export default function UserRegisterModal({ closeModal }) {
                         <button
                             disabled={buttonDisabled}
                             className='btn btn-success btn-save'
-                            onClick={callApiToCreateUser}
+                            onClick={callApiToUpdateContact}
                         >
                             Salvar
                         </button>
@@ -69,10 +63,13 @@ export default function UserRegisterModal({ closeModal }) {
                     <ErrorMessage requestErrorMessage={requestErrorMessage} />
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
-UserRegisterModal.propTypes = {
-    closeModal: PropTypes.func.isRequired
+EditContactModal.propTypes = {
+    closeModal: PropTypes.func.isRequired,
+    id: PropTypes.number.isRequired,
+    contactName: PropTypes.string.isRequired,
+    contactPhone: PropTypes.number.isRequired,
 };

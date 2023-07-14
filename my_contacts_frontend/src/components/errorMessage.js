@@ -5,7 +5,7 @@ import '../styles/components/errorMessage.css'
 
 export default function ErrorMessage({ requestErrorMessage = null }) {
     return (
-        <div className="error-message">
+        <div className='error-message'>
             <span>
                 {requestErrorMessage}
             </span>
